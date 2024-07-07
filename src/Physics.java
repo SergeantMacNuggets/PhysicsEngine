@@ -3,7 +3,7 @@ public abstract class Physics {
     public double vel, acc;
     public double xVel, yVel;
     public double time;
-    public double gravity = 1.0;
+    public double gravity = 0.981;
 }
 
 class Movement extends Physics {
@@ -14,10 +14,6 @@ class Movement extends Physics {
 
     public void setyVelocity(double yVel) {
         this.yVel = yVel;
-    }
-
-    public void setAcceleration(double acc) {
-        this.acc = acc;
     }
 
     public double addAcceleration(double a) {
@@ -31,11 +27,17 @@ class Movement extends Physics {
         this.yVel += gravity;
     }
     public void addxVelocity(double a) {
+        a = (xVel < 0) ? (-1) * a : a;
         xVel+=a;
         x+=(int) xVel;
     }
 
     public void addyVelocity() {
+        y+=(int) yVel;
+    }
+    public void addyVelocity(double a) {
+        a = (yVel < 0) ? (-1) * a : a;
+        yVel+=a;
         y+=(int) yVel;
     }
     private boolean detectCollisionX() {

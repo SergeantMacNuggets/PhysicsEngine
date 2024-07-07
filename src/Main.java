@@ -26,17 +26,33 @@ class Box {
 class Window extends JPanel implements ActionListener {
     Timer timer;
     Movement physics;
+    JLabel stats;
     Window() {
         this.setPreferredSize(new Dimension(800,800));
         this.setBackground(Color.black);
         physics = new Movement();
-        physics.x=40;
+        physics.x=400;
         physics.y=10;
-        physics.setxVelocity(5.0);
-        physics.setyVelocity(0.0);
+        physics.setxVelocity(1.0);
+        physics.setyVelocity(1.0);
+        this.instLabel();
         timer = new Timer(10,this);
         timer.start();
     }
+
+    public void instLabel() {
+        stats = new JLabel();
+        stats.setForeground(Color.white);
+    }
+
+    public void stats(Physics phy) {
+        stats.setText("<html><p style="+"margin-right:520px;"+">" +
+                "xVel: " + String.valueOf((int) physics.xVel)+
+                "<br/>yVel: " + String.valueOf((int) physics.yVel) +
+                "<br/>Acc: " + String.valueOf((double) physics.acc) + "</p></html>");
+        this.add(stats);
+    }
+
     public void paint(Graphics g) {
         Graphics box = (Graphics2D) g;
         super.paint(g);
@@ -46,6 +62,7 @@ class Window extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         physics.rigid();
+        this.stats(physics);
         repaint();
     }
 }
