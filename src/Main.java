@@ -1,68 +1,35 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-/*
-class Box {
-
-	public void addPhysics(Physics physics) {
-	a
-	}
-
-	public void paint(Graphics g) {
-		Graphics box = (Graphics2D) g;
-		super.paint(g);
-		box.setColor(Color.blue);
-		box.fillRect(physics.x,physics.y,40,40);
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		physics.bounce();
-		physics.addCollision();
-		repaint();
-	}
-}*/
 
 class Window extends JPanel implements ActionListener {
     Timer timer;
-    Movement physics;
     JLabel stats;
+    Box box1,box2;
+    int winWidth = 800;
+    int winHeight = 800;
+    Dimension d = new Dimension(800,800);
     Window() {
-        this.setPreferredSize(new Dimension(800,800));
+        this.setPreferredSize(d);
         this.setBackground(Color.black);
-        physics = new Movement();
-        physics.x=400;
-        physics.y=10;
-        physics.setxVelocity(1.0);
-        physics.setyVelocity(1.0);
-        this.instLabel();
+        box1 = new Box(400,10,40,40);
+        box2 = new Box(80,200,40,40);
         timer = new Timer(10,this);
         timer.start();
     }
 
-    public void instLabel() {
-        stats = new JLabel();
-        stats.setForeground(Color.white);
-    }
-
-    public void stats(Physics phy) {
-        stats.setText("<html><p style="+"margin-right:520px;"+">" +
-                "xVel: " + String.valueOf((int) physics.xVel)+
-                "<br/>yVel: " + String.valueOf((int) physics.yVel) +
-                "<br/>Acc: " + String.valueOf((double) physics.acc) + "</p></html>");
-        this.add(stats);
-    }
-
     public void paint(Graphics g) {
-        Graphics box = (Graphics2D) g;
         super.paint(g);
-        box.setColor(Color.blue);
-        box.fillRect(physics.x,physics.y,40,40);
+        box1.createBox(g);
+        box2.createBox(g);
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        physics.rigid();
-        this.stats(physics);
+        box1.dynamicWindow(getWidth(),getHeight());
+        box2.dynamicWindow(getWidth(),getHeight());
+        box1.physics.bounce();
+        box2.physics.bounce();
         repaint();
     }
 }
