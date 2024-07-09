@@ -21,10 +21,25 @@ class Box extends Shape {
         collisions = new Collision(physics);
 
     }
+
     public Graphics createBox(Graphics g) {
         g.setColor(Color.blue);
         g.fillRect(physics.x,physics.y,width,height);
         return g;
+    }
+
+    public int getX() {
+        return physics.x;
+    }
+    public int getWidth() {
+        return physics.shape_width;
+    }
+
+    public int getY() {
+        return physics.y;
+    }
+    public int getHeight() {
+        return physics.shape_height;
     }
 
     public void dynamicWindow(double width, double height) {

@@ -7,7 +7,7 @@ public abstract class Physics {
     public double vel, acc;
     public double xVel, yVel;
     public double time;
-    public double gravity = 0.981;
+    public double gravity = 0.5;
 }
 class Movement extends Physics {
     Collision collision;
@@ -37,6 +37,21 @@ class Movement extends Physics {
     public void addGravity() {
         this.yVel += gravity;
     }
+
+//    public int getX() {
+//        return x;
+//    }
+//    public int getWidth() {
+//        return shape_width;
+//    }
+//
+//    public int getY() {
+//        return y;
+//    }
+//    public int getHeight() {
+//        return shape_height;
+//    }
+
     public void addxVelocity(double a) {
         a = (xVel < 0) ? (-1) * a : a;
         xVel += a;
@@ -64,7 +79,7 @@ class Movement extends Physics {
     public void bounce() {
         this.addGravity();
         this.addyVelocity();
-        collision.addCollisionY();
+        //collision.addCollisionY();
     }
 
 }
@@ -79,10 +94,17 @@ class Collision {
             return true;
         return false;
     }
+    //detectCOllisionX
     public boolean detectCollisionX(Box b) {
+//        boolean a = (m.x >= b.x && )
         if((m.x+m.shape_width) >= m.win_Width || m.x < 0)
             return true;
         //Create a code here that detect if it collides with other shapes
+        //I Dont know any of this shit
+        if((m.x + m.shape_width) >= b.getX() && m.x + m.shape_width < b.getX() + 5)
+            return true;
+        else if(m.x <= b.getX() + b.getWidth() && m.x > b.getX() + (b.getWidth() - 5))
+            return true;
         return false;
     }
 
@@ -91,14 +113,38 @@ class Collision {
             return true;
         return false;
     }
+//detectCollisionY final
+    public boolean detectCollisionY(Box b) {
+//        boolean a = (m.x >= b.x && )
+
+        if((m.y+m.shape_height) >= m.win_Height || m.y < 0)
+            return true;
+        //Create a code here that detect if it collides with other shapes
+        //I Dont know any of this shit
+        if((m.y + m.shape_height) >= b.getY() && m.y + m.shape_height < b.getY() + 5)
+            return true;
+        else if(m.y <= b.getY() + b.getHeight() && m.y > b.getY() + (b.getHeight() - 5))
+            return true;
+        return false;
+    }
+
 
     public void addCollisionX() {
         if(detectCollisionX())
             m.xVel *= (-1);
     }
 
+    public void addCollisionX(boolean collide) {
+        if(collide)
+            m.xVel *= (-1);
+    }
     public void addCollisionY() {
         if(detectCollisionY())
+            m.yVel *= (-1);
+    }
+
+    public void addCollisionY(boolean collide) {
+        if(collide)
             m.yVel *= (-1);
     }
 }
